@@ -24,7 +24,7 @@ another_proc = Proc.new { |n| n.to_s(8).to_i }
 # The expected return value of map on this number array should be:
 p [8,10,12,14,16,33].map(&:to_s)
 # methods that don't take an argument can be done this way
-p [8,10,12,14,16,33].map(&method(:convert_to_base_8))
+p [8,10,12,14,16,33].map(&base8_proc)
 # since convert_to_base_8 takes one argument, we have to convert it to an Object object before converting it to a proc.
 
 # [10, 12, 14, 16, 20, 41]
