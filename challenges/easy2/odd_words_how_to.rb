@@ -66,61 +66,66 @@ def odd_words(str)
 end
 
 def odd_reverse(str)
-  odd_word = false
-  odd_word_size = 0
-  insert_idx = 0
-  space_deducted = 0
-  save_deducted = 0
   result = ''
-  word_idx = 0
+  odd_word = false
   space_added = false
+  last_letter_idx = 0
+  result_space_idx = 0
+  result_word_idx = 0
 
   str.chars.each_with_index do |char, idx|
-    p [idx, word_idx, result, odd_word_size, odd_word, space_deducted]
-    insert_idx = word_idx + 2 - space_deducted
+    p [idx, last_letter_idx, 'rs' + result_space_idx.to_s, 'rw' + result_word_idx.to_s, result]
     case char
     when 'A'..'Z', 'a'..'z', '0'..'9'
-      if odd_word
-        result.insert(insert_idx, char)
-        odd_word_size += 1
-      else
+      last_letter_idx = idx
+      result_word_idx += 1
+      next if result_word_idx - result_space_idx >= 20
+      if !odd_word || space_added
         result << char
-        word_idx = idx
-        odd_word_size = 0
+        space_added = false
+      else
+        result.insert(result_space_idx + 1, char)
       end
-      space_added = false
     when ' '
-      word_idx = word_idx + odd_word_size + 1 if odd_word && !space_added
-      # space_deducted = space_deducted + save_deducted if odd_word
-      if idx - word_idx == 1
+      if idx - last_letter_idx == 1
         result << char
         odd_word = !odd_word
         space_added = true
-      else
-        space_deducted += 1 && save_deducted += 1 if !odd_word
+        result_space_idx = result.size - 1
       end
     when '.'
-      break
+
     end
-    print [idx, word_idx, result, odd_word_size, odd_word, space_deducted].to_s.rjust(50)
+    p [idx, last_letter_idx, 'rs' + result_space_idx.to_s, 'rw' + result_word_idx.to_s, result]
   end
-  result[-1] == ' ' ? (result[-1] = '.') : (result << '.')
+  result[-1] == ' ' ? result[-1] = '.' : result << '.'
   result
 end
 
-# 'word1 word2   word3    .     '
-#  012345678901234567890234
-#            1         2
+# 'hi    moving   thisisaverylongwordshouldbeinvalid word2.'
+# 012345678901234567890123456789012345678901234567890123456
+#           1         2         3         4
+
+# "hi gnivom thisisaverylongwordshouldbeinvalid 2drow."
+#  012345678901234567890123456789012345678901234567890
+#            1         2         3         4         5
 
 # 'word1 Word2   word3      woORD4.'
 #  01234567890123456789012345678901
 #            1         2         3
 
-# p odd_reverse("whats the matter with kansas.") #== "whats eht matter htiw kansas."
+# 'word1 2droW word3 4DROow.'
+#  0123456789012345678901234
+#            1         2
+
+# 'word1 word2   word3    .     '
+#  012345678901234567890234
+#            1         2
+
+p odd_reverse("whats the matter with kansas.") #== "whats eht matter htiw kansas."
 p odd_reverse('word1 Word2   word3      woORD4   word5.') #== 'word1 2droW word3 4DROow.'
-# p odd_reverse('word1 word2   word3    .') #== 'word1 2drow word3.'/
+p odd_reverse('word1 word2   word3    .') #== 'word1 2drow word3.'/
 # p odd_reverse('.') # raise ArgumentError
 # p odd_reverse('') # raise ArgumentError
 # p odd_reverse('word1') # raise ArgumentError
-# p odd_reverse('thisisaverylongwordshouldbeinvalid word2.') # raise ArgumentError
-
+p odd_reverse('hi    moving   thisisaverylongwordshouldbeinvalid word2.') # "hi gnivom thisisaverylongwordshouldbeinvalid 2drow."

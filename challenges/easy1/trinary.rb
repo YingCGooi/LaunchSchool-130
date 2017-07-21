@@ -17,18 +17,18 @@
 
 # check input: valid numbers are 0,1,2, other characters are invalid, output 0 if invalid
 # reversed transformation starting from the idx = 0, up to idx = (size - 1)
-# each iteration, multiply number by 3^idx
+# each iteration, multiply number by 3^ idx
 
 class Trinary
   def initialize(num_str)
-    @digits = num_str[/[^012]/] ? [0] : num_str.to_i.digits
+    @digits = num_str[/[^012]/] ? '0' : num_str #.to_i.digits #[0]
   end
 
   def to_decimal
-    @digits.map
-           .with_index { |digit, idx| digit * (3**idx) }
-           .reduce(0, :+)
-    # @digits.chars.reduce(0) { |sum, n| n.to_i + sum * 3 }
+    # @digits.map
+    #        .with_index { |digit, idx| digit * (3**idx) }
+    #        .reduce(0, :+)
+    @digits.chars.reduce(0) { |sum, n| n.to_i + sum * 3 }
   end
 end
 

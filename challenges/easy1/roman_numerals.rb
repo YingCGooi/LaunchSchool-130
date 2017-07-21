@@ -35,10 +35,14 @@ class Integer
 end
 
 class Integer
-  ROMAN_N = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50,   XL: 40,  X: 10,  IX: 9,   V: 5,   IV: 4, I: 1 }
+  ROMAN_N = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50,   XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 }
 
   def to_roman(num = self)
     ROMAN_N.map { |k, v| (n, num = num.divmod(v)) && k.to_s * n }.join
+    # a && b, a is evaluated first, if a is truthy, b gets evaluted.
+    # returns b if both a and b are truthy
+    # if b is falsey, return b
+    # if a is falsey, return a
   end
 end
 
