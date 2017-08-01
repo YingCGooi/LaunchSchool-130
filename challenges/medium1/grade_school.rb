@@ -16,39 +16,25 @@
 # "Grade 1: Anna, Barb, and Charlie. Grade 2: Alex, Peter, and Zoe. Grade 3…"
 # Note that all our students only have one name. (It's a small town, what do you want?)
 
-# class School
-#   attr_accessor :roster
+class School
+  attr_accessor :roster
 
-#   def initialize
-#     @roster = Hash.new { |h, grade| h[grade] = [] }
-#   end
+  def initialize
+    @roster = Hash.new { |h, grade| h[grade] = [] }
+  end
 
-#   def add(name, grade)
-#     roster[grade] << name
-#   end
+  def add(name, grade)
+    roster[grade] << name
+  end
 
-#   def grade(grade)
-#     roster[grade]
-#   end
+  def grade(grade)
+    roster[grade]
+  end
 
-#   def to_h
-#     roster.sort_by { |grade, name| name.sort! && grade }.to_h
-#   end
-# end
+  def to_h
+    roster.sort_by { |grade, name| name.sort! && grade }.to_h
+  end
+end
 
 hsh = {2=>["Bcd", "Abc", "Refg", "Cde"], 1=>["Hg", "Ab", "Ac"], 3=>["De", "Da", "Ad"]}
 p hsh.sort_by { |k, v| v.sort! && k }.to_h
-
-School = Class.new do
-  method_names = %i[initialize add grade to_h]
-  method_bodies = [ -> { @roster = Hash.new([]) },
-                    -> (name, num) { (@roster[num] += [name]).sort! },
-                    -> (num) { @roster[num] },
-                    -> { @roster.sort.to_h } ]
-  method_names.zip(method_bodies).each { |name, body| define_method(name, body) }
-end
-
-p school = School.new
-p school.add("Bob", 2)
-p school.add("Gracie", 2)
-p school
