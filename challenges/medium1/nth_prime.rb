@@ -39,27 +39,4 @@ class Prime
   end
 end
 
-class Prime
-  def self.nth(n)
-    raise ArgumentError if n < 1
-    primes = {1 => 2}
-
-    loop do
-      break primes[n] if primes.size >= n
-      primes << current_prime if prime?(primes, current_prime)
-      current_prime += 2
-      current_count += 1
-    end
-  end
-
-  def self.prime?(primes, current_prime)
-  # test to see if numbers less than square root of current_prime are prime
-    primes.take_while do |prime|
-      break false if current_prime % prime == 0
-      prime <= (current_prime**0.5)
-    end
-  end
-end
-
-# p Prime.nth(6)
-p Prime.nth(100_000)
+p Prime.nth(6)
