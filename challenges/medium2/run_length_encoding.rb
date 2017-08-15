@@ -9,24 +9,6 @@
 
 # "AABCCCDEEEE"  ->  "2AB3CD4E"  ->  "AABCCCDEEEE"
 
-# class RunLengthEncoding
-#   def self.encode(input)
-#     current_char = input[0]
-#     count = 0
-
-#     input.chars.map do |char|
-#       count += 1
-#       if char != current_char
-#         arr = [count, current_char]
-#         count = 0
-#         current_char = char
-#         next arr
-#       end
-#       nil
-#     end
-#   end
-# end
-
 class RunLengthEncoding
   def self.encode(input)
     input.scan(/((.)\2*)/)
