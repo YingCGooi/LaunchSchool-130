@@ -21,19 +21,19 @@
 
 class WordProblem
   PATTERN = /-?\d+|plus|minus|multiplied|divided/
-  TO_OPERATIONS = {
-    "plus"    => :+,
-    "minus"   => :-,
-    "multiplied"=> :*,
-    "divided"  => :/
-  }
+  TO_OPERATIONS = { "plus" => :+, "minus" => :-,
+                    "multiplied" => :*, "divided" => :/ }
 
   def initialize(word_problem)
+    raise ArgumentError if !valid(word_problem)
+
     @math_exp =
       word_problem.scan(PATTERN)
                   .map { |word| TO_OPERATIONS[word] || word.to_i }
+  end
 
-    raise ArgumentError if TO_OPERATIONS.keys.none? { |op| word_problem[op] }
+  def valid(word_problem)
+    word_problem[/-?\d+\s(plus|minus|multiplied by|divided by)\s-?\d+/]
   end
 
   def answer
@@ -46,3 +46,6 @@ end
 # p WordProblem.new('What is 1 plus 1 plus 1?').answer
 # p WordProblem.new('What is 33 divided by -3?').answer
 # p WordProblem.new('What is -3 multiplied by 25?').answer
+# p WordProblem.new('5 divided by 4 6')
+# p WordProblem.new('divided 45 multiplied').answer
+# p WordProblem.new('hello 45')
