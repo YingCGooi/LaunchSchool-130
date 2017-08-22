@@ -23,6 +23,8 @@ Then, then `&` will turn the Proc into a block.
 
 `:to_s` is a symbol. Ruby can call `Symbol#to_proc` on it and return a `Proc` object.
 
+The symbol has to correspond to a method given by the Ruby Standard Library before `#to_proc` can properly convert it to an appropriate `Proc` object.
+
 ### Examples
 
 ```ruby
