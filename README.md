@@ -1,2 +1,2 @@
-# LaunchSchool-130
-Contains all exercise files and several notes for 130 - Ruby Foundations - More Topics
+## Ruby Challenges and Exercises
+The challenges can be found within the "challenges" folder.
